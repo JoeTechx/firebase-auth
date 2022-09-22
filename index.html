@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyTraka</title>
+    <link rel="stylesheet" href="./css/home.css" />
+  </head>
+  <body>
+    <div class="form-logo">
+      <img src="./img/frame 26.png" alt="" class="logo-img" />
+    </div>
+    <div class="container">
+      <!-- <a class="user-name-link" href="#"></a> -->
+      <button class="logout" id="sign_out">Logout</button>
+      <h3  class="greeting" id="user">Welcome User: </h3>
+    </div>
+    
+  
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import {  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut}
+     from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDY8GfiHQWra7Ln3UVASrnuQGkj8tSr2qo",
+      authDomain: "studytraka-ii.firebaseapp.com",
+      projectId: "studytraka-ii",
+      storageBucket: "studytraka-ii.appspot.com",
+      messagingSenderId: "968365205663",
+      appId: "1:968365205663:web:73d255686441db8bc21aaa"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Reference
+    const signOutBtn = document.getElementById('sign_out');
+  
+
+
+    function signOutUser(){
+      signOut(auth)
+      .then(() => {
+        alert('You successfully logout from this account')
+        location.href= 'login.html'
+          // Sign-out successful.
+        }).catch((error) => {
+          // An error happened.
+        });
+    }
+    signOutBtn.addEventListener('click', signOutUser);
+
+    const user = auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+          if (user !== null) {
+            const displayName = user.displayName;
+            const photoURL = user.photoURL;
+            const emailVerified = user.emailVerified;
+            const uid = user.uid;
+            const email = user.email
+            const users = document.getElementById('user')
+            const text = document.createTextNode(email)
+
+            users.appendChild(text)
+            console.log('user state changed ' + user.email, user.displayName, user.emailVerified, user.photoURL, user.uid);
+          }else{ 
+             // User is signed out
+          }
+        }) 
+</script>
+    <!-- <script src="./js/home.js"></script> -->
+  </body>
+</html>

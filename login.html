@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="alert-box">
+      <p class="alert"></p>
+    </div>
+    <div class="form-logo">
+      <img src="./img/frame 26.png" alt="" class="logo-img" />
+    </div>
+    <div class="form-container">
+      <img src="./img/training.png" alt=""  class="form-img" />
+    <div class="form">
+      <h1 class="heading">Welcome Back</h1>
+      <p class="heading-subtitle">Continue From Where You Stop</p>
+      <input
+      type="email"
+      placeholder="email Address"
+      autocomplete="off"
+      class="email"
+      id="email_input"
+      required
+    />
+
+      <input
+        type="password"
+        placeholder="password"
+        autocomplete="off"
+        class="password"
+        id="pass_input"
+        required
+      />
+
+<!-- Rounded switch -->
+<!-- <div class="switch-box">
+<label class="switch" id="switch"> 
+  <input type="checkbox" />
+  <span class="slider round"></span>
+</label>
+<p class="keep">keep me logged in </p>
+</div> -->
+
+      <button class="submit-btn" id="sub_btn">Log in</button>
+      <a href="/register.html" class="link">don't have an account? Register one </a>
+    </div>
+  </div>
+
+  
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import {  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDY8GfiHQWra7Ln3UVASrnuQGkj8tSr2qo",
+      authDomain: "studytraka-ii.firebaseapp.com",
+      projectId: "studytraka-ii",
+      storageBucket: "studytraka-ii.appspot.com",
+      messagingSenderId: "968365205663",
+      appId: "1:968365205663:web:73d255686441db8bc21aaa"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Reference
+    const email = document.getElementById('email_input');
+    const pass = document.getElementById('pass_input');
+    const submit = document.getElementById('sub_btn')
+
+        function LoginUser(){
+          signInWithEmailAndPassword(auth, email.value, pass.value)
+            .then((userCredentials)=>{
+              const user = userCredentials.user;
+              alert('user login successfully!!')
+              window.location = "index.html"
+              // console.log(user.email);
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              alert('user not found')
+            });
+        }
+
+          // assign event //
+    submit.addEventListener('click', LoginUser);
+  // <script type="module" src="./js/form.js"></script>
+</body>
+</html>
